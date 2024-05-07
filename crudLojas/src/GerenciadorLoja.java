@@ -58,17 +58,17 @@ public class GerenciadorLoja {
     public void cadastra() {
         String nome = JOptionPane.showInputDialog("Qual o nome da loja à adicionar?");
 
-        if(nome == "") {
+        if (nome == "") {
             return;
         }
 
         String endereco = JOptionPane.showInputDialog("Qual o endereço da loja?");
-        if(endereco == "") {
+        if (endereco == "") {
             return;
         }
 
         double telefone = Double.parseDouble(JOptionPane.showInputDialog("Qual o telefone da loja? (Somente números):"));
-        if(telefone <=0) {
+        if (telefone <= 0) {
             return;
         }
 
@@ -81,12 +81,12 @@ public class GerenciadorLoja {
 
 
     public void mostraLojas(boolean informaTudo) {
-        if(this.lojas.size() == 0) {
+        if (this.lojas.size() == 0) {
             System.out.println("Nenhuma loja cadastrada.");
-        } else  {
+        } else {
 
-            for(int i = 0; i < this.lojas.size(); ++i) {
-                if(informaTudo) {
+            for (int i = 0; i < this.lojas.size(); ++i) {
+                if (informaTudo) {
                     System.out.printf("%d. %s: %s, %.0f\n", (i + 1), this.lojas.get(i).getNome(), this.lojas.get(i).getEndereco(), this.lojas.get(i).getTelefone());
                 } else {
                     System.out.printf("%d. %s\n", (i + 1), this.lojas.get(i).getNome());
@@ -96,7 +96,6 @@ public class GerenciadorLoja {
     }
 
 
-
     public void removeLoja() {
         System.out.println("Escolha a loja que você deseja apagar");
         this.mostraLojas(false);
@@ -104,15 +103,14 @@ public class GerenciadorLoja {
         int opcao = Integer.parseInt(JOptionPane.showInputDialog("Digite o número da loja à apagar:"));
         opcao--;
 
-        if(opcao < 0 || opcao > lojas.size()) {
+        if (opcao < 0 || opcao >= lojas.size()) {
             System.out.println("Loja inválida.");
             return;
         }
 
-        System.out.printf("Loja %s removida.", this.lojas.get(opcao).getNome());
+        System.out.printf("Loja %s removida.\n", this.lojas.get(opcao).getNome());
         this.lojas.remove(opcao);
     }
-
 
 
     public void editaLoja() {
@@ -122,19 +120,19 @@ public class GerenciadorLoja {
         int opcao = Integer.parseInt(JOptionPane.showInputDialog("Digite o número da loja que você deseja editar:"));
         opcao--;
 
-        if(opcao < 0 || opcao > this.lojas.size()) {
+        if (opcao < 0 || opcao >= this.lojas.size()) {
             System.out.println("Loja inválida.");
         } else {
 
             String endereco = JOptionPane.showInputDialog("Endereço da loja " + this.lojas.get(opcao).getNome() + ":", this.lojas.get(opcao).getEndereco());
-            if(endereco == "") {
+            if (endereco == "") {
                 System.out.println("Cancelado.");
                 return;
             }
 
-            double telefone = Double.parseDouble(JOptionPane.showInputDialog("Número da loja " + this.lojas.get(opcao).getNome() + ":", this.lojas.get(opcao).getTelefone());
+            double telefone = Double.parseDouble(JOptionPane.showInputDialog("Número da loja " + this.lojas.get(opcao).getNome() + ":", this.lojas.get(opcao).getTelefone()));
 
-            if(telefone <= 0 ) {
+            if (telefone <= 0) {
                 System.out.println("Cancelado.");
                 return;
             }
@@ -142,17 +140,17 @@ public class GerenciadorLoja {
             lojas.get(opcao).setEndereco(endereco);
             lojas.get(opcao).setTelefone(telefone);
 
-            System.out.printf("Loja %s editada com sucesso.", this.lojas.get(opcao).getNome());
+            System.out.printf("Loja %s editada com sucesso.\n", this.lojas.get(opcao).getNome());
         }
     }
 
 
     public void geraDados() {
 
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
 
             String fakeNome = randomizaString(5);
-            String fakeEndereco = "Rua " + randomizaString(6)+ ", " + randomizaString(2);
+            String fakeEndereco = "Rua " + randomizaString(6) + ", " + randomizaString(2);
             double fakeTel = 12345678;
 
             Loja loja = new Loja(fakeNome, fakeEndereco, fakeTel);
@@ -161,26 +159,21 @@ public class GerenciadorLoja {
     }
 
 
-    String randomizaString(int quantidade) {
+        private String randomizaString(int quantidade){
 
-        String caracteres = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            String caracteres = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            String finalString = "";
 
-        String final;
+            for (int i = 0; i <= quantidade; ++i) {
+                finalString += caracteres.charAt(random(0, caracteres.length() -1));
+            }
 
-        for(int i = 0; i <= quantidade; ++i) {
-            final += caracteres[random(0, caracteres.length())];
+            return finalString;
         }
 
-        return final;
+
+        private int random ( int min, int max){
+            int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
+            return random_int;
+        }
     }
-
-
-
-
-
-
-    int random(int min, int max) {
-        int random_int = (int)Math.floor(Math.random() * (max - min + 1) + min);
-        return random_int;
-    }
-}
